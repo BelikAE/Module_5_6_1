@@ -54,7 +54,8 @@ namespace Module_5_6_1
             using (var ts = new Transaction(doc, "Creatte sd"))
             {
                 ts.Start();
-                Duct.Create(doc, systemType.Id, SelectedDuctType.Id, SelectedLevel.Id, Points[0], Points[1]);
+                var duct = Duct.Create(doc, systemType.Id, SelectedDuctType.Id, SelectedLevel.Id, Points[0], Points[1]);
+                duct.get_Parameter(BuiltInParameter.RBS_OFFSET_PARAM).Set(UnitUtils.ConvertToInternalUnits(DuctOffset, UnitTypeId.Millimeters));
                 ts.Commit();
             }
             RaiseCloseRequest();
